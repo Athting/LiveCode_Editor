@@ -1,0 +1,24 @@
+{
+  "name": "realtime_code",
+  "version": "1.0.0",
+  "description": "🚀 A collaborative code editor for seamless, real-time coding with teammates.",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js",
+    "build": "npm install && cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
