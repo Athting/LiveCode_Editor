@@ -6,7 +6,9 @@ import axios from "axios";
 const app = express();
 const server = http.createServer(app);
 
-const io = new Server(server, { cors: { origin: "*" } });
+// Set allowed CORS origin from environment variable or default to all (for development)
+const allowedOrigin = process.env.CORS_ORIGIN || "*";
+const io = new Server(server, { cors: { origin: allowedOrigin } });
 
 const rooms = new Map();
 
@@ -57,7 +59,7 @@ io.on("connection", (socket) => {
         "https://emkc.org/api/v2/piston/execute",
         {
           language,
-          version: "*", 
+          version: "*",
           files: [
             {
               name: `main.${fileExtension}`,
@@ -94,4 +96,15 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(5000, () => console.log("✅ Server running on port 5000"));
+// Use environment variable for port (set PORT in production)
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+  if (allowedOrigin !== "*") {
+    console.log(`CORS restricted to: ${allowedOrigin}`);
+  } else {
+    console.log(
+      "Warning: CORS is open to all origins. Set CORS_ORIGIN env variable in production."
+    );
+  }
+});
